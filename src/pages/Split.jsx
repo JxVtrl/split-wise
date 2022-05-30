@@ -6,6 +6,7 @@ export function Split() {
     return (
         <div>
             <Chart />
+            <p>Este é seu planejamento de gastos:</p>
         </div>
     );
 }

@@ -18,12 +18,28 @@ export function AppProvider({ children }) {
         } else
             setValidInfos(false)
     }, [])
+
+    const [chartType, setChartType] = useState('pie')
+
+    const handleChangeChart = () => {
+        setChartType(chartType === 'pie' ? 'doughnut' : 'pie')
+    }
+
+    const handleAddToChart = () => {
+
+
+    }
     
 
     const value = {
         validInfos,
+
         name,
-        wealth
+        wealth,
+
+        handleChangeChart,
+        chartType,
+        handleAddToChart,
         
     }
 
