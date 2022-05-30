@@ -3,7 +3,7 @@ import { useApp } from '../context';
 import '../styles/add.css'
 
 export function Add() {
-    const { handleAddPage, handleAddItem } = useApp()
+    const { handleAddPage, handleAddItem, error } = useApp()
 
     const [label, setLabel] = useState('')
     const [value, setValue] = useState(0)
@@ -11,6 +11,7 @@ export function Add() {
 
     return (
         <div className='add_container'>
+            {error && <p className='error'>{error}</p>}
             <form>
                 <label>
                     <span>Label:</span>

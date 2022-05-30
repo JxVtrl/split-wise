@@ -8,11 +8,20 @@ export function AppProvider({ children }) {
     const [chartData, setChartData] = useState(null)
     const [name, setName] = useState('')
     const [wealth, setWealth] = useState(0)
+    const [wealthUsed, setWealthUsed] = useState(0)
+    const [error, setError] = useState('')
 
     useEffect(() => {
+        const dataChart = JSON.parse(localStorage.getItem('dataChart'))
         setChartData(
-            localStorage.getItem('dataChart') ? JSON.parse(localStorage.getItem('dataChart')) : createData
+            localStorage.getItem('dataChart') ? dataChart : createData
         )
+        
+        let valueTotal = 0
+        for (let i = 0; i < dataChart.values.length; i++) 
+            valueTotal += Number(dataChart.values[i])
+        
+        setWealthUsed(valueTotal)
     }, [])
 
     useEffect(() => { 
@@ -38,18 +47,21 @@ export function AppProvider({ children }) {
     }
 
     const handleAddItem = (label, value, color) => {
-        if (label && value && color) {
-            const dataToBeAdded = {
-                labels: [...chartData.labels, label],
-                values: [...chartData.values, value],
-                colors: [...chartData.colors, color]
+        if (wealth-wealthUsed > value && value) {
+            if (label && value && color) {
+                const dataToBeAdded = {
+                    labels: [...chartData.labels, label],
+                    values: [...chartData.values, value],
+                    colors: [...chartData.colors, color]
+                }
+                setWealthUsed(wealthUsed + value)
+                localStorage.setItem('dataChart', JSON.stringify(dataToBeAdded))
+                window.location.reload()
             }
-            localStorage.setItem('dataChart', JSON.stringify(dataToBeAdded))
-            window.location.reload()
+        } else {
+            setError(`Valor R$ ${(wealth-wealthUsed).toFixed(2)} insuficiente para adicionar este item`)
         }
     }
-
-
     
 
     const value = {
@@ -65,7 +77,10 @@ export function AppProvider({ children }) {
         handleAddItem,
 
         AddItem,
-        setAddItem
+        setAddItem,
+
+        wealthUsed,
+        error
         
     }
 
