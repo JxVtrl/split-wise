@@ -1,0 +1,58 @@
+.add_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add_container form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.add_container label {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.add_container input {
+    width: 100%;
+    height: 30px;
+    padding: 0;
+    text-indent: 10px;
+    margin: 0;
+    border: 1px solid #ccc;
+}
+
+.add_container form div {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+}
+
+.add_container button {
+    width: 100%;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add_container button:disabled{
+    background-color: #ccc;
+    color: #fff;
+    cursor: not-allowed;
+}

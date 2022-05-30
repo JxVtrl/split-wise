@@ -1,7 +1,14 @@
+export function formatName(name) {
+    return name[0].toUpperCase() + name.slice(1).toLowerCase();
+}
+
 export function greeting(name) {
     const hour = new Date().getHours()
-    const greeting = hour < 12 && hour > 4 ? 'bom dia' : hour > 12 && hour < 18 ? 'boa tarde' : 'boa noite'
-    name = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    const greeting =
+        hour < 12 && hour >= 4 ?
+            'Bom dia' :
+            hour >= 12 && hour < 18 ?
+                'Boa tarde' : 'Boa noite'
 
-    return `Olá ${name}, ${greeting}`
+    return `${greeting} ${formatName(name)} `
 }
