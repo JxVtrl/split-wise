@@ -1,9 +1,11 @@
 import React from 'react';
-
-// import { Container } from './styles';
+import { Chart } from '../components';
 
 export function Split() {
+   
     return (
-        <div />
+        <div>
+            <Chart />
+        </div>
     );
 }
