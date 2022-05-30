@@ -1,0 +1,20 @@
+.layout_container {
+    height: 100%;
+    padding: 0 30px;
+}
+
+.layout_container header {
+    height: 12vh;
+    display: flex;
+    align-items: center;
+}
+
+.layout_container header h1 {
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+}
+
+.layout_container main {
+    height: 88vh;
+}
