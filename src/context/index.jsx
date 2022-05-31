@@ -27,16 +27,18 @@ export function AppProvider({ children }) {
     useEffect(() => { 
         const validName = localStorage.getItem('name')
         const validWealth = localStorage.getItem('wealth')
+        const chartType = localStorage.getItem('chartType')
 
         if (validName && validWealth) {
             setValidInfos(true)
             setName(validName)
             setWealth(validWealth)
+            setChartType(chartType)
         } else
             setValidInfos(false)
     }, [])
 
-    const [chartType, setChartType] = useState('pie')
+    const [chartType, setChartType] = useState(localStorage.getItem('chartType') || 'pie')
     const handleChangeChart = () => {
         setChartType(chartType === 'pie' ? 'doughnut' : 'pie')
     }
