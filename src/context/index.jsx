@@ -47,20 +47,25 @@ export function AppProvider({ children }) {
     }
 
     const handleAddItem = (label, value, color) => {
-        if (wealth-wealthUsed > value && value) {
-            if (label && value && color) {
-                const dataToBeAdded = {
-                    labels: [...chartData.labels, label],
-                    values: [...chartData.values, value],
-                    colors: [...chartData.colors, color]
-                }
-                setWealthUsed(wealthUsed + value)
-                localStorage.setItem('dataChart', JSON.stringify(dataToBeAdded))
-                window.location.reload()
-            }
-        } else {
-            setError(`Valor R$ ${(wealth-wealthUsed).toFixed(2)} insuficiente para adicionar este item`)
-        }
+        if (!chartData.colors.includes(color)) {
+            if (!chartData.labels.includes(label)) {
+                if (wealth - wealthUsed > value && value) {
+                    if (label && value && color) {
+                        const dataToBeAdded = {
+                            labels: [...chartData.labels, label],
+                            values: [...chartData.values, value],
+                            colors: [...chartData.colors, color]
+                        }
+                        setWealthUsed(wealthUsed + value)
+                        localStorage.setItem('dataChart', JSON.stringify(dataToBeAdded))
+                        window.location.reload()
+                    }
+                } else
+                    setError(`Valor R$ ${(wealth - wealthUsed).toFixed(2)} insuficiente para adicionar este item`)
+            } else
+                setError('Este item já existe')
+        } else
+            setError('Esta cor já existe')
     }
     
 
@@ -79,6 +84,7 @@ export function AppProvider({ children }) {
         AddItem,
         setAddItem,
 
+        chartData,
         wealthUsed,
         error
         
