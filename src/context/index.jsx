@@ -82,6 +82,7 @@ export function AppProvider({ children }) {
 
         handleChangeChart,
         chartType,
+        setChartType,
 
         handleAddPage,
         handleAddItem,

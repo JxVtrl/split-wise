@@ -3,7 +3,7 @@ import { useApp } from '../context';
 import '../styles/config.css';
 
 export function Config() {
-    const { name, setName, wealth, wealthUsed, setError, error, chartType, handleChangeChart } = useApp();
+    const { name, setName, wealth, wealthUsed, setError, error, chartType, setChartType, handleChangeChart } = useApp();
     const [tempWealth, setTempWealth] = useState(wealth);
 
     const handleSaveConfig = (e) => {
@@ -14,6 +14,7 @@ export function Config() {
             localStorage.setItem('name', name);
             localStorage.setItem('wealth', tempWealth);
             setError('');
+            setChartType(chartType);
             window.location.reload();
         } else {
             setError('Preencha todos os campos.');
