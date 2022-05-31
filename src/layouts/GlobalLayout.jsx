@@ -6,7 +6,6 @@ import { useApp } from '../context';
 export function GlobalLayout({ children }) {
     const {
         name,
-        handleChangeChart,
         handleAddPage,
         AddItem,
         handleConfigPage,
@@ -27,10 +26,6 @@ export function GlobalLayout({ children }) {
                                 className="fa-solid fa-plus"
                                 onClick={handleAddPage}
                             />
-                            {/* <i
-                                className="fa-solid fa-arrows-rotate"
-                                onClick={handleChangeChart}
-                            /> */}
                             <i
                                 className="fa-solid fa-gear"
                                 onClick={handleConfigPage}

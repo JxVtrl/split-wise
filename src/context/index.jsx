@@ -39,9 +39,6 @@ export function AppProvider({ children }) {
     }, [])
 
     const [chartType, setChartType] = useState(localStorage.getItem('chartType') || 'pie')
-    const handleChangeChart = () => {
-        setChartType(chartType === 'pie' ? 'doughnut' : 'pie')
-    }
 
     const [AddItem, setAddItem] = useState(false)
     const handleAddPage = () => {
@@ -82,7 +79,6 @@ export function AppProvider({ children }) {
         name,
         wealth,
 
-        handleChangeChart,
         chartType,
         setChartType,
 
