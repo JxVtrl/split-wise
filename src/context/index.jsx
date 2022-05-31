@@ -67,11 +67,16 @@ export function AppProvider({ children }) {
         } else
             setError('Esta cor já existe')
     }
+
+    const [configPage, setConfigPage] = useState(false)
+    const handleConfigPage = () => {
+        setConfigPage(!configPage)
+    }
     
 
     const value = {
         validInfos,
-
+        setName,
         name,
         wealth,
 
@@ -86,8 +91,11 @@ export function AppProvider({ children }) {
 
         chartData,
         wealthUsed,
-        error
-        
+        setError,
+        error,
+
+        handleConfigPage,
+        configPage
     }
 
     return (

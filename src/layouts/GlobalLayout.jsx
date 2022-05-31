@@ -8,23 +8,35 @@ export function GlobalLayout({ children }) {
         name,
         handleChangeChart,
         handleAddPage,
-        AddItem
+        AddItem,
+        handleConfigPage,
+        configPage
     } = useApp()
 
     return (
         <div className='layout_container'>
             <header>
-                <h1>{AddItem ? 'Adicionar novo item' : greeting(name)}</h1>
+                <h1>{AddItem ? 'Adicionar novo item' : configPage ? 'Configurações' : greeting(name)}</h1>
                 {AddItem || (
                     <div>
-                        <i
-                            className="fa-solid fa-arrows-rotate"
-                            onClick={handleChangeChart}
-                        />
-                        <i
-                            className="fa-solid fa-plus"
-                            onClick={handleAddPage}
-                        />
+                        {configPage ? (
+                            <i className="fa-solid fa-x" onClick={handleConfigPage}/>
+                        ) : (
+                        <>   
+                            <i
+                                className="fa-solid fa-plus"
+                                onClick={handleAddPage}
+                            />
+                            {/* <i
+                                className="fa-solid fa-arrows-rotate"
+                                onClick={handleChangeChart}
+                            /> */}
+                            <i
+                                className="fa-solid fa-gear"
+                                onClick={handleConfigPage}
+                            />
+                        </>
+                        )}
                     </div>
                 )}
             </header>

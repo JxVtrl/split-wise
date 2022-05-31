@@ -5,7 +5,7 @@ import { useApp } from '../context';
 import '../styles/split.css';
 
 export function Split() {
-    const { AddItem } = useApp();
+    const { AddItem,  } = useApp();
     
     return (
         <>
