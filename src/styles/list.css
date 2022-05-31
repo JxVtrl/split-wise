@@ -20,6 +20,10 @@
     padding: 2px 8px;
 }
 
+.list_itens{
+    overflow-y: auto;
+}
+
 .list_container .list-item .list-item-label {
     display: flex;
     align-items: center;

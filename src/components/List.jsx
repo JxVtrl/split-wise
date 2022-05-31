@@ -29,7 +29,7 @@ export function List() {
                     
                 </div>
             </div>
-            <div>
+            <div className='list_itens'>
                 {chartData.labels.map((label, index) => (
                     <div key={index} className="list-item">
                         <span className="list-item-label">{label}</span>
