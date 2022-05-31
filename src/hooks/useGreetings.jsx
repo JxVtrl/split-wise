@@ -1,5 +1,6 @@
 export function formatName(name) {
-    return name[0].toUpperCase() + name.slice(1).toLowerCase();
+    name = name.slice(' ')
+    return name[0][0].toUpperCase() + name.slice(1).toLowerCase();
 }
 
 export function greeting(name) {
