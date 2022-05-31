@@ -5,6 +5,7 @@ import '../styles/config.css';
 export function Config() {
     const { name, setName, wealth, wealthUsed, setError, error, chartType, setChartType, handleChangeChart } = useApp();
     const [tempWealth, setTempWealth] = useState(wealth);
+    const [chartKind, setChartKind] = useState(false);
 
     const handleSaveConfig = (e) => {
         e.preventDefault();
@@ -14,7 +15,7 @@ export function Config() {
             localStorage.setItem('name', name);
             localStorage.setItem('wealth', tempWealth);
             setError('');
-            setChartType(chartType);
+            setChartType(chartKind ? 'pie' : 'doughnut');
             window.location.reload();
         } else {
             setError('Preencha todos os campos.');
@@ -26,11 +27,11 @@ export function Config() {
             <div>
                 {error ? <p className='error'>{error}</p> : null}
             </div>
-            <div onClick={handleChangeChart}>
-                {chartType === 'pie' ? (
-                    <i className="fa-solid fa-pizza-slice" />
-                ): (
+            <div onClick={setChartKind(!chartKind)}>
+                {chartKind ? (
                     <i className="fa-solid fa-chart-pie" />
+                ): (
+                    <i className="fa-solid fa-pizza-slice" />
                 )}
             </div>
             <form>
