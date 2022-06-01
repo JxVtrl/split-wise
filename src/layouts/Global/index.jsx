@@ -1,6 +1,6 @@
 import React from 'react';
-import { greeting } from '../hooks';
-import { useApp } from '../context';
+import { greeting } from '../../hooks';
+import { useApp } from '../../context';
 import { Container } from './styles';
 
 export function Global({ children }) {
