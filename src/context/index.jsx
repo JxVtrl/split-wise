@@ -116,7 +116,9 @@ export function AppProvider({ children }) {
     
 
     const value = {
+        AddItem,
         validInfos,
+        wealthUsed,
         
         setName,
         name,
@@ -129,10 +131,6 @@ export function AppProvider({ children }) {
         handleAddPage,
         handleAddItem,
         handleDeleteItem,
-
-        AddItem,
-
-        wealthUsed,
 
         setError,
         error,

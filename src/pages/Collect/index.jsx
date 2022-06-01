@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import '../styles/collect.css'
+import { Container } from './styles';
 
 export function Collect() {
     const [wealth, setWealth] = useState(0);
@@ -29,29 +29,25 @@ export function Collect() {
     }
 
     return (
-        <div className='container'>
+        <Container>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label className='label'>
+                    <label>
                         <span>Nome</span>
                         <input
                             type="text"
                             name="nome"
-                            id="input_name"
-                            className='input'
                             placeholder='Insira seu nome'
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
                     </label>
-                    <label className='label'>
+                    <label>
                         <div>
                             <span>Salário</span>
                             <input
                                 type="text"
                                 name="salario"
-                                id="input_salario"
-                                className='input'
                                 placeholder='Insira o salário'
                                 value={wealth.toFixed(2)}
                                 onChange={(e) => setWealth(Number(e.target.value))}
@@ -64,8 +60,11 @@ export function Collect() {
                         </div>
                     </label>
                 </div>
-                <button disabled={!name || !wealth} type="submit" className='button'>Enviar</button>
+                <button
+                    disabled={!name || !wealth}
+                    type="submit"
+                >Enviar</button>
             </form>
-        </div>
+        </Container>
     );
 }

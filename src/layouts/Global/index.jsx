@@ -1,9 +1,9 @@
 import React from 'react';
-import '../styles/layout.css';
 import { greeting } from '../hooks';
 import { useApp } from '../context';
+import { Container } from './styles';
 
-export function GlobalLayout({ children }) {
+export function Global({ children }) {
     const {
         name,
         handleAddPage,
@@ -13,7 +13,7 @@ export function GlobalLayout({ children }) {
     } = useApp()
 
     return (
-        <div className='layout_container'>
+        <Container>
             <header>
                 <h1>{AddItem ? 'Adicionar novo item' : configPage ? 'Configurações' : greeting(name)}</h1>
                 {AddItem || (
@@ -38,6 +38,6 @@ export function GlobalLayout({ children }) {
             <main>
                 {children}
             </main>
-        </div>
+        </Container>
     );
 }

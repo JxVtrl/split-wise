@@ -1,6 +1,6 @@
 import React from 'react'
 import { useApp } from '../context'
-import { GlobalLayout } from '../layouts'
+import { Global } from '../layouts'
 import { Collect, Split, Config } from '../pages'
 import '../styles/app.css'
 
@@ -12,13 +12,13 @@ export default function App() {
 
   return (
     <div className="App">
-      <GlobalLayout>
+      <Global>
         {configPage ?
           <Config /> :
             validInfos ? 
               <Split /> : <Collect />
         }
-      </GlobalLayout>
+      </Global>
     </div>
   )
 }

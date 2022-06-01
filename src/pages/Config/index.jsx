@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useApp } from '../context';
-import '../styles/config.css';
+import { useApp } from '../../context';
+import { Container } from './styles';
 
 export function Config() {
     const { name, setName, wealth, wealthUsed, setError, error } = useApp();
@@ -21,9 +21,9 @@ export function Config() {
     }
 
     return (
-        <div className='config_container'>
+        <Container>
             <div>
-                {error ? <p className='error'>{error}</p> : null}
+                {error ? <p>{error}</p> : null}
             </div>
             <form>
                 <label>
@@ -44,6 +44,6 @@ export function Config() {
                 </label>
                 <button type="submit" onClick={e => handleSaveConfig(e)}>Salvar</button>
             </form>
-        </div>
+        </Container>
     );
 }

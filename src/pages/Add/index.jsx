@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useApp } from '../context';
-import '../styles/add.css'
+import { useApp } from '../../context';
+import { Container } from './styles';
 
 export function Add() {
-    const { handleAddPage, handleAddItem, error } = useApp()
+    const { handleAddPage, handleAddItem, error, wealth, wealthUsed } = useApp()
 
     const [label, setLabel] = useState('')
     const [value, setValue] = useState(0)
@@ -20,9 +20,10 @@ export function Add() {
     }
 
     return (
-        <div className='add_container'>
+        <Container>
             {error && <p className='error'>{error}</p>}
             <form>
+                <h4>R$ {(wealth - wealthUsed).toFixed(2)} restantes</h4>
                 <label>
                     <span>Label:</span>
                     <input
@@ -39,6 +40,7 @@ export function Add() {
                         placeholder='Valor do item'
                         onChange={(e) => setValue(e.target.value)}
                         value={value}
+                        max={wealth - wealthUsed}
                     />
                 </label>
                 <label>
@@ -61,6 +63,6 @@ export function Add() {
                     </button>
                 </div>
             </form>
-        </div>
+        </Container>
     );
 }
