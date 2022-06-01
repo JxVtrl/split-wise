@@ -9,7 +9,7 @@ export function Chart() {
     const { labels, values, colors } = useApp()
 
     return (
-        <div style={{width: '350px', margin: '0 auto'}}>
+        <div style={{width: '350px', margin: '0 auto', display: 'flex', justifyContent: 'center'}}>
             <Doughnut
                 data={{
                 labels: labels,
