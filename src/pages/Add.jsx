@@ -9,6 +9,16 @@ export function Add() {
     const [value, setValue] = useState(0)
     const [color, setColor] = useState('#000000')
 
+    const handleAdd = e => {
+        e.preventDefault()
+        handleAddItem(label, value, color)
+    }
+
+    const handleCancel = e => {
+        e.preventDefault()
+        handleAddPage()
+    }
+
     return (
         <div className='add_container'>
             {error && <p className='error'>{error}</p>}
@@ -41,8 +51,14 @@ export function Add() {
                     />
                 </label>
                 <div>
-                    <button onClick={e => { e.preventDefault(); handleAddPage() }}>Cancelar</button>
-                    <button type='submit' disabled={!value || !label || color === '#000000'} onClick={e => { e.preventDefault(); handleAddItem(label, value, color) }}>Adicionar</button>
+                    <button onClick={handleCancel}>Cancelar</button>
+                    <button
+                        type='submit'
+                        disabled={!value || !label || color === '#000000'}
+                        onClick={handleAdd}
+                    >
+                        Adicionar
+                    </button>
                 </div>
             </form>
         </div>

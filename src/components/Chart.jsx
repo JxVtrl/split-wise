@@ -1,30 +1,25 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut, Pie } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import { useApp } from '../context';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const localData = JSON.parse(localStorage.getItem('dataChart')) || { labels: [], values: [], colors: [] };
-
-const data = {
-    labels: localData.labels,
-    datasets: [
-        {
-        data: localData.values,
-        backgroundColor: localData.colors.map(color => color+'33'),
-        borderColor: localData.colors,
-        borderWidth: 1,
-    },
-  ],
-};
-
 export function Chart() {
-    const { chartType } = useApp()
+    const { labels, values, colors } = useApp()
 
     return (
-        <>
-            {chartType === 'pie' ? <Pie data={data} /> : <Doughnut data={data} />}
-        </>
-    );
+        <div style={{width: '350px', margin: '0 auto'}}>
+            <Doughnut
+                data={{
+                labels: labels,
+                datasets: [{
+                        data: values,
+                        backgroundColor: colors.map(color => color + '33'),
+                        borderColor: colors,
+                    }]
+                }}
+            />
+        </div>
+    )
 }

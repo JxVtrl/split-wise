@@ -1,76 +1,85 @@
 import React, { createContext, useContext, useEffect, useState, useRef } from 'react'
 
 const AppContext = createContext()
-import { createData } from '../utils/createData'
 
 export function AppProvider({ children }) {
-    const [validInfos, setValidInfos] = useState(false)
-    const [chartData, setChartData] = useState(null)
     const [name, setName] = useState('')
+
     const [wealth, setWealth] = useState(0)
     const [wealthUsed, setWealthUsed] = useState(0)
-    const [error, setError] = useState('')
 
-    useEffect(() => {
-        const dataChart = JSON.parse(localStorage.getItem('dataChart'))
-        setChartData(
-            localStorage.getItem('dataChart') ? dataChart : createData
-        )
-        
-        let valueTotal = 0
-        for (let i = 0; i < dataChart.values.length; i++) 
-            valueTotal += Number(dataChart.values[i])
-        
-        setWealthUsed(valueTotal)
-    }, [])
+    const [labels, setLabels] = useState(localStorage.getItem('labels') || [])
+    const [values, setValues] = useState(localStorage.getItem('values') || [])
+    const [colors, setColors] = useState(localStorage.getItem('colors') || [])
+
+    const [validInfos, setValidInfos] = useState(false)
 
     useEffect(() => { 
-        const validName = localStorage.getItem('name')
-        const validWealth = localStorage.getItem('wealth')
-        const chartType = localStorage.getItem('chartType')
+        const name = localStorage.getItem('name')
+        const wealth = localStorage.getItem('wealth')
 
-        if (validName && validWealth) {
+        const labels = localStorage.getItem('labels')
+        const values = localStorage.getItem('values')
+        const colors = localStorage.getItem('colors')
+
+        if (name && wealth) {
             setValidInfos(true)
-            setName(validName)
-            setWealth(validWealth)
-            setChartType(chartType)
+            setName(name)
+            setWealth(wealth)
+
+            let wealthUsed = 0
+            for (let i = 0; i < values.split(',').length; i++) {
+                wealthUsed += values.split(',')[i]
+            }
+            setWealthUsed(wealthUsed)   
+
+            if (labels && values && colors) {
+                setLabels(labels.split(','))
+                setValues(values.split(','))
+                setColors(colors.split(','))
+            }
         } else
             setValidInfos(false)
     }, [])
 
-    const [chartType, setChartType] = useState(localStorage.getItem('chartType') || 'pie')
+    
+    const [error, setError] = useState('')
 
-    const [AddItem, setAddItem] = useState(false)
-    const handleAddPage = () => {
-        setAddItem(!AddItem)
+    const saveItem = (label, value, color) => {
+        setLabels([...labels, label])
+        setValues([...values, value])
+        setColors([...colors, color])
+        
+        let wealthUsed = 0
+        for (let i = 0; i < values.length; i++) {
+            wealthUsed += values.split(',')[i]
+        }
+        setWealthUsed(wealthUsed)
+        setAddItem(false)
     }
 
-    const handleAddItem = (label, value, color) => {
-        if (!chartData.colors.includes(color)) {
-            if (!chartData.labels.includes(label)) {
-                if (wealth - wealthUsed > value && value) {
-                    if (label && value && color) {
-                        const dataToBeAdded = {
-                            labels: [...chartData.labels, label],
-                            values: [...chartData.values, value],
-                            colors: [...chartData.colors, color]
-                        }
-                        setWealthUsed(wealthUsed + value)
-                        localStorage.setItem('dataChart', JSON.stringify(dataToBeAdded))
-                        window.location.reload()
-                    }
-                } else
-                    setError(`Valor R$ ${(wealth - wealthUsed).toFixed(2)} insuficiente para adicionar este item`)
-            } else
-                setError('Este item já existe')
+    useEffect(() => {
+        localStorage.setItem('labels', labels)
+        localStorage.setItem('values', values)
+        localStorage.setItem('colors', colors)
+    }, [labels, values, colors])
+
+    const handleAddItem = (label, value, color) => {        
+        if (!colors.includes(color) && !labels.includes(label)) {
+            // if (wealth - wealthUsed > value)
+                saveItem(label, value, color)
+            // else
+            //     setError(`Valor R$ ${(wealth - wealthUsed).toFixed(2)} insuficiente para adicionar este item`)    
         } else
-            setError('Esta cor já existe')
+            setError('Este item já existe')
     }
 
+    
+    const [AddItem, setAddItem] = useState(false)
+    const handleAddPage = () => setAddItem(!AddItem)
+    
     const [configPage, setConfigPage] = useState(false)
-    const handleConfigPage = () => {
-        setConfigPage(!configPage)
-    }
+    const handleConfigPage = () => setConfigPage(!configPage)
     
 
     const value = {
@@ -79,16 +88,18 @@ export function AppProvider({ children }) {
         name,
         wealth,
 
-        chartType,
-        setChartType,
+        labels,
+        setLabels,
+        values,
+        setValues,
+        colors,
+        setColors,
 
         handleAddPage,
         handleAddItem,
 
         AddItem,
         setAddItem,
-
-        chartData,
         wealthUsed,
         setError,
         error,

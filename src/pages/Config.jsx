@@ -3,9 +3,8 @@ import { useApp } from '../context';
 import '../styles/config.css';
 
 export function Config() {
-    const { name, setName, wealth, wealthUsed, setError, error, chartType } = useApp();
+    const { name, setName, wealth, wealthUsed, setError, error } = useApp();
     const [tempWealth, setTempWealth] = useState(wealth);
-    const [chartKind, setChartKind] = useState(chartType === 'pie' ? true : false);
 
     const handleSaveConfig = (e) => {
         e.preventDefault();
@@ -14,7 +13,6 @@ export function Config() {
         } else if (name && Number(tempWealth)) {
             localStorage.setItem('name', name);
             localStorage.setItem('wealth', tempWealth);
-            localStorage.setItem('chartType', chartKind ? 'pie' : 'doughnut');
             setError('');
             window.location.reload();
         } else {
@@ -27,21 +25,22 @@ export function Config() {
             <div>
                 {error ? <p className='error'>{error}</p> : null}
             </div>
-            <div onClick={() => setChartKind(!chartKind)}>
-                {chartKind ? (
-                    <i className="fa-solid fa-chart-pie" />
-                ): (
-                    <i className="fa-solid fa-pizza-slice" />
-                )}
-            </div>
             <form>
                 <label>
                     Nome
-                    <input type="text" value={name} onChange={e => setName(e.target.value)}/>
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                    />
                 </label>
                 <label>
                     Salário
-                    <input type="number" value={tempWealth} onChange={e => setTempWealth(e.target.value)}/>
+                    <input
+                        type="number"
+                        value={tempWealth}
+                        onChange={e => setTempWealth(e.target.value)}
+                    />
                 </label>
                 <button type="submit" onClick={e => handleSaveConfig(e)}>Salvar</button>
             </form>
