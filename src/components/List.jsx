@@ -3,7 +3,17 @@ import { useApp } from '../context';
 import '../styles/list.css';
 
 export function List() {
-    const { labels, setLabels, colors, setColors, values, setValues, wealth, wealthUsed } = useApp();
+    const {
+        labels,
+        setLabels,
+        colors,
+        setColors,
+        values,
+        setValues,
+        wealth,
+        wealthUsed,
+        setWealthUsed,
+    } = useApp();
 
     const handleDeleteItem = (e) => {
         const item = e.target.parentNode.parentNode.childNodes[0].innerText
@@ -26,7 +36,6 @@ export function List() {
                 <span className="list-item-label">Remaining</span>
                 <div className='list-item-info'>
                     <span className="list-item-value">R$ {(Number(wealth) - (wealthUsed)).toFixed(2)}</span>
-                    
                 </div>
             </div>
             <div className='list_itens'>

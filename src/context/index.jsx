@@ -14,6 +14,14 @@ export function AppProvider({ children }) {
 
     const [validInfos, setValidInfos] = useState(false)
 
+    const transformToArray = (string) => {
+        if (string.includes(',')) {
+            return string.split(',')
+        } else {
+            return [string]
+        }
+    }
+
     useEffect(() => { 
         const name = localStorage.getItem('name')
         const wealth = localStorage.getItem('wealth')
@@ -28,8 +36,8 @@ export function AppProvider({ children }) {
             setWealth(wealth)
 
             let wealthUsed = 0
-            for (let i = 0; i < values.split(',').length; i++) {
-                wealthUsed += values.split(',')[i]
+            for (let i = 0; i < transformToArray(values).length; i++) {
+                wealthUsed += Number(transformToArray(values)[i])
             }
             setWealthUsed(wealthUsed)   
 
@@ -51,8 +59,8 @@ export function AppProvider({ children }) {
         setColors([...colors, color])
         
         let wealthUsed = 0
-        for (let i = 0; i < values.length; i++) {
-            wealthUsed += values.split(',')[i]
+        for (let i = 0; i < transformToArray(values).length; i++) {
+            wealthUsed += Number(transformToArray(values)[i])
         }
         setWealthUsed(wealthUsed)
         setAddItem(false)
@@ -101,6 +109,7 @@ export function AppProvider({ children }) {
         AddItem,
         setAddItem,
         wealthUsed,
+        setWealthUsed,
         setError,
         error,
 
