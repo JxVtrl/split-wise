@@ -3,49 +3,56 @@ import React, { createContext, useContext, useEffect, useState, useRef } from 'r
 const AppContext = createContext()
 
 export function AppProvider({ children }) {
-    const [name, setName] = useState('')
-
-    const [wealth, setWealth] = useState(0)
-    const [wealthUsed, setWealthUsed] = useState(0)
-
-    const [labels, setLabels] = useState(localStorage.getItem('labels') || [])
-    const [values, setValues] = useState(localStorage.getItem('values') || [])
-    const [colors, setColors] = useState(localStorage.getItem('colors') || [])
-
     const [validInfos, setValidInfos] = useState(false)
+    const [name, setName] = useState('')
+    const [wealth, setWealth] = useState(0)
 
     const transformToArray = (string) => {
-        if (string.includes(',')) {
-            return string.split(',')
-        } else {
-            return [string]
+        if (string) {
+            if (string.includes(',')) {
+                return string.split(',')
+            } else {
+                return [string]
+            }
+        }
+    }
+
+    const [labels, setLabels] = useState(transformToArray(localStorage.getItem('labels')) || [])
+    const [values, setValues] = useState(transformToArray(localStorage.getItem('values')) || [])
+    const [colors, setColors] = useState(transformToArray(localStorage.getItem('colors')) || [])
+    
+    const [wealthUsed, setWealthUsed] = useState(0)
+
+    const totalWealthUsed = () => {
+        let wealthUsed = 0
+        for (let i = 0; i < values.length; i++) 
+            wealthUsed += Number(values[i])
+        
+        setWealthUsed(Number(wealthUsed))
+    }
+
+    const checkEmptyValues = () => {
+        if (labels.includes('')) {
+            setLabels(labels.filter(label => label !== ''))
+        }
+        if (values.includes('')) {
+            setValues(values.filter(value => value !== ''))
+        }
+        if (colors.includes('')) { 
+            setColors(colors.filter(color => color !== ''))
         }
     }
 
     useEffect(() => { 
         const name = localStorage.getItem('name')
         const wealth = localStorage.getItem('wealth')
-
-        const labels = localStorage.getItem('labels')
-        const values = localStorage.getItem('values')
-        const colors = localStorage.getItem('colors')
-
+        
         if (name && wealth) {
             setValidInfos(true)
             setName(name)
             setWealth(wealth)
-
-            let wealthUsed = 0
-            for (let i = 0; i < transformToArray(values).length; i++) {
-                wealthUsed += Number(transformToArray(values)[i])
-            }
-            setWealthUsed(wealthUsed)   
-
-            if (labels && values && colors) {
-                setLabels(labels.split(','))
-                setValues(values.split(','))
-                setColors(colors.split(','))
-            }
+            totalWealthUsed()
+            checkEmptyValues()
         } else
             setValidInfos(false)
     }, [])
@@ -53,33 +60,51 @@ export function AppProvider({ children }) {
     
     const [error, setError] = useState('')
 
-    const saveItem = (label, value, color) => {
-        setLabels([...labels, label])
-        setValues([...values, value])
-        setColors([...colors, color])
-        
-        let wealthUsed = 0
-        for (let i = 0; i < transformToArray(values).length; i++) {
-            wealthUsed += Number(transformToArray(values)[i])
-        }
-        setWealthUsed(wealthUsed)
-        setAddItem(false)
-    }
-
     useEffect(() => {
         localStorage.setItem('labels', labels)
         localStorage.setItem('values', values)
         localStorage.setItem('colors', colors)
+        totalWealthUsed()
     }, [labels, values, colors])
+
+    const saveItem = (label, value, color) => {
+        setLabels([...labels, label])
+        setValues([...values, value])
+        setColors([...colors, color])
+        checkEmptyValues()
+        setAddItem(false)
+    }
 
     const handleAddItem = (label, value, color) => {        
         if (!colors.includes(color) && !labels.includes(label)) {
-            // if (wealth - wealthUsed > value)
+            if (wealth - wealthUsed > value)
                 saveItem(label, value, color)
-            // else
-            //     setError(`Valor R$ ${(wealth - wealthUsed).toFixed(2)} insuficiente para adicionar este item`)    
+            else
+                setError(`Valor R$ ${(wealth - wealthUsed).toFixed(2)} insuficiente para adicionar este item`)    
         } else
             setError('Este item já existe')
+    }
+
+    const handleDeleteItem = (e) => {
+        const item = e.target.parentNode.parentNode.childNodes[0].innerText
+        const index = labels.indexOf(item)
+       
+        const dataToBeAdded = {
+            labels: [...labels],
+            values: [...values],
+            colors: [...colors]
+        }
+
+        dataToBeAdded.labels.splice(index, 1)
+        dataToBeAdded.values.splice(index, 1)
+        dataToBeAdded.colors.splice(index, 1)
+
+        checkEmptyValues()
+
+        
+        setLabels(dataToBeAdded.labels)
+        setValues(dataToBeAdded.values)
+        setColors(dataToBeAdded.colors)
     }
 
     
@@ -92,29 +117,28 @@ export function AppProvider({ children }) {
 
     const value = {
         validInfos,
+        
         setName,
         name,
         wealth,
 
         labels,
-        setLabels,
         values,
-        setValues,
         colors,
-        setColors,
 
         handleAddPage,
         handleAddItem,
+        handleDeleteItem,
 
         AddItem,
-        setAddItem,
+
         wealthUsed,
-        setWealthUsed,
+
         setError,
         error,
 
         handleConfigPage,
-        configPage
+        configPage,
     }
 
     return (
