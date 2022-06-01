@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from '../../context';
+import { HeaderList } from '../Header/HeaderList';
 import { Container, Header, List as ItemList, Item, Info } from './styles';
 
 export function List() {
@@ -13,12 +14,7 @@ export function List() {
 
     return (
         <Container>
-            <Header>
-                <span>Remaining</span>
-                <div>
-                    <span>R$ {(Number(wealth)-Number(wealthUsed)).toFixed(2)}</span>
-                </div>
-            </Header>
+            <HeaderList />
             <ItemList>
                 {labels.map((label, index) => (
                     <Item>

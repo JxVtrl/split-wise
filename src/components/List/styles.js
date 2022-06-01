@@ -13,14 +13,7 @@ export const Container = styled.div`
 `;
 
 export const Header = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    margin-bottom: 10px;
+
 `
 
 export const List = styled.ul`

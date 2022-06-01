@@ -12,7 +12,6 @@ export function Split() {
             {AddItem ? <Add /> : (
                 <Container> 
                     <Chart />
-                    <p>Este é seu planejamento de gastos:</p>
                     <List />
                 </Container>
             )}
