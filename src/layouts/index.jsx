@@ -1,2 +1,1 @@
-export { GlobalLayout } from './GlobalLayout'
-export { WelcomeLayout } from './WelcomeLayout'
+export { Global } from './Global'

@@ -1,72 +1,144 @@
 import React, { createContext, useContext, useEffect, useState, useRef } from 'react'
 
 const AppContext = createContext()
-import { createData } from '../utils/createData'
 
 export function AppProvider({ children }) {
     const [validInfos, setValidInfos] = useState(false)
-    const [chartData, setChartData] = useState(null)
     const [name, setName] = useState('')
     const [wealth, setWealth] = useState(0)
 
-    useEffect(() => {
-        setChartData(
-            localStorage.getItem('dataChart') ? JSON.parse(localStorage.getItem('dataChart')) : createData
-        )
-    }, [])
+    const transformToArray = (string) => {
+        if (string) {
+            if (string.includes(',')) {
+                return string.split(',')
+            } else {
+                return [string]
+            }
+        }
+    }
+
+    const [labels, setLabels] = useState(transformToArray(localStorage.getItem('labels')) || [])
+    const [values, setValues] = useState(transformToArray(localStorage.getItem('values')) || [])
+    const [colors, setColors] = useState(transformToArray(localStorage.getItem('colors')) || [])
+    
+    const [wealthRemaining, setWealthRemaining] = useState(0)
+    const [wealthUsed, setWealthUsed] = useState(0)
+
+    const totalWealthUsed = () => {
+        let wealthUsed = 0
+        for (let i = 0; i < values.length; i++) 
+            wealthUsed += Number(values[i])
+        
+        setWealthRemaining(wealth - wealthUsed)
+        setWealthUsed(Number(wealthUsed))
+    }
+
+    const checkEmptyValues = () => {
+        if (labels.includes('')) {
+            setLabels(labels.filter(label => label !== ''))
+        }
+        if (values.includes('')) {
+            setValues(values.filter(value => value !== ''))
+        }
+        if (colors.includes('')) { 
+            setColors(colors.filter(color => color !== ''))
+        }
+    }
 
     useEffect(() => { 
-        const validName = localStorage.getItem('name')
-        const validWealth = localStorage.getItem('wealth')
-
-        if (validName && validWealth) {
+        const name = localStorage.getItem('name')
+        const wealth = localStorage.getItem('wealth')
+        
+        if (name && wealth) {
             setValidInfos(true)
-            setName(validName)
-            setWealth(validWealth)
+            setName(name)
+            setWealth(wealth)
+            totalWealthUsed()
+            checkEmptyValues()
         } else
             setValidInfos(false)
     }, [])
 
-    const [chartType, setChartType] = useState('pie')
-    const handleChangeChart = () => {
-        setChartType(chartType === 'pie' ? 'doughnut' : 'pie')
+    
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+        localStorage.setItem('labels', labels)
+        localStorage.setItem('values', values)
+        localStorage.setItem('colors', colors)
+        totalWealthUsed()
+    }, [labels, values, colors])
+
+    const saveItem = (label, value, color) => {
+        setLabels([...labels, label])
+        setValues([...values, value])
+        setColors([...colors, color])
+        checkEmptyValues()
+        setAddItem(false)
     }
 
-    const [AddItem, setAddItem] = useState(false)
-    const handleAddPage = () => {
-        setAddItem(!AddItem)
+    const handleAddItem = (label, value, color) => {        
+        if (!colors.includes(color) && !labels.includes(label)) {
+            if (wealth - wealthUsed > value)
+                saveItem(label, value, color)
+            else
+                setError(`Valor R$ ${(wealth - wealthUsed).toFixed(2)} insuficiente para adicionar este item`)    
+        } else
+            setError('Este item já existe')
     }
 
-    const handleAddItem = (label, value, color) => {
-        if (label && value && color) {
-            const dataToBeAdded = {
-                labels: [...chartData.labels, label],
-                values: [...chartData.values, value],
-                colors: [...chartData.colors, color]
-            }
-            localStorage.setItem('dataChart', JSON.stringify(dataToBeAdded))
-            window.location.reload()
+    const handleDeleteItem = (e) => {
+        const item = e.target.parentNode.parentNode.childNodes[0].innerText
+        const index = labels.indexOf(item)
+       
+        const dataToBeAdded = {
+            labels: [...labels],
+            values: [...values],
+            colors: [...colors]
         }
+
+        dataToBeAdded.labels.splice(index, 1)
+        dataToBeAdded.values.splice(index, 1)
+        dataToBeAdded.colors.splice(index, 1)
+
+        checkEmptyValues()
+        
+        setLabels(dataToBeAdded.labels)
+        setValues(dataToBeAdded.values)
+        setColors(dataToBeAdded.colors)
     }
 
-
+    
+    const [AddItem, setAddItem] = useState(false)
+    const handleAddPage = () => setAddItem(!AddItem)
+    
+    const [configPage, setConfigPage] = useState(false)
+    const handleConfigPage = () => setConfigPage(!configPage)
     
 
     const value = {
+        AddItem,
         validInfos,
-
+        wealthUsed,
+        wealthRemaining,
+        
+        setName,
         name,
         wealth,
 
-        handleChangeChart,
-        chartType,
+        labels,
+        values,
+        colors,
 
         handleAddPage,
         handleAddItem,
+        handleDeleteItem,
 
-        AddItem,
-        setAddItem
-        
+        setError,
+        error,
+
+        handleConfigPage,
+        configPage,
     }
 
     return (

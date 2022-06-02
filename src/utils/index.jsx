@@ -1,1 +1,1 @@
-export { createData } from './createData'
+export { useData } from './useData';

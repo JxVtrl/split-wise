@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import '../styles/collect.css'
+import { Container } from './styles';
 
 export function Collect() {
     const [wealth, setWealth] = useState(0);
@@ -29,34 +29,33 @@ export function Collect() {
     }
 
     return (
-        <div className='container'>
+        <Container>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label className='label'>
+                    <h2>Bem-vindo ao Split Wise</h2>
+                    <p>Para começar, digite seu nome e o valor<br/>total de sua renda</p>
+                </div>
+                <div>
+                    <label>
                         <span>Nome</span>
                         <input
                             type="text"
                             name="nome"
-                            id="input_name"
-                            className='input'
                             placeholder='Insira seu nome'
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
                     </label>
-                    <label className='label'>
-                        <div>
-                            <span>Salário</span>
-                            <input
-                                type="text"
-                                name="salario"
-                                id="input_salario"
-                                className='input'
-                                placeholder='Insira o salário'
-                                value={wealth.toFixed(2)}
-                                onChange={(e) => setWealth(Number(e.target.value))}
-                            />
-                        </div>
+                    <label>
+                        <span>Salário</span>
+                        <input
+                            type="text"
+                            name="salario"
+                            placeholder='Insira o salário'
+                            value={wealth.toFixed(2)}
+                            onChange={(e) => setWealth(Number(e.target.value))}
+                        />
+                        
                         <div onClick={e => handleAddValue(e)}>
                             <button>+ 100,00</button>
                             <button>+ 500,00</button>
@@ -64,8 +63,16 @@ export function Collect() {
                         </div>
                     </label>
                 </div>
-                <button disabled={!name || !wealth} type="submit" className='button'>Enviar</button>
+                <button
+                    disabled={!name || !wealth}
+                    type="submit"
+                >Enviar</button>
             </form>
-        </div>
+            <footer>
+                <p>
+                    Seus dados nunca serão compartilhados.
+                </p>
+            </footer>
+        </Container>
     );
 }
