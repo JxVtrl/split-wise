@@ -12,13 +12,11 @@ export default function App() {
 
   return (
     <div className="App">
-      <Global>
-        {configPage ?
-          <Config /> :
-            validInfos ? 
-              <Split /> : <Collect />
-        }
-      </Global>
+      {validInfos ? (
+        <Global>
+          {configPage ? <Config /> : <Split />}
+        </Global>
+      ) : <Collect />}
     </div>
   )
 }

@@ -6,7 +6,7 @@ import { useApp } from '../../context';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function Chart() {
-    const { labels, values, colors } = useApp()
+    const { labels, values, colors, wealthRemaining } = useApp()
 
     return (
         <div style={{width: '100%', maxWidth: '300px', margin: '0 auto', display: 'flex', justifyContent: 'center'}}>

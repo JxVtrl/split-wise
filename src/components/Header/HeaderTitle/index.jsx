@@ -9,7 +9,7 @@ export function HeaderTitle() {
     const {
         name,
         AddItem,
-        configPage
+        configPage,
     } = useApp()
 
     const title = useData.texts.title

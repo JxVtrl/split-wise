@@ -21,6 +21,7 @@ export function AppProvider({ children }) {
     const [values, setValues] = useState(transformToArray(localStorage.getItem('values')) || [])
     const [colors, setColors] = useState(transformToArray(localStorage.getItem('colors')) || [])
     
+    const [wealthRemaining, setWealthRemaining] = useState(0)
     const [wealthUsed, setWealthUsed] = useState(0)
 
     const totalWealthUsed = () => {
@@ -28,6 +29,7 @@ export function AppProvider({ children }) {
         for (let i = 0; i < values.length; i++) 
             wealthUsed += Number(values[i])
         
+        setWealthRemaining(wealth - wealthUsed)
         setWealthUsed(Number(wealthUsed))
     }
 
@@ -100,7 +102,6 @@ export function AppProvider({ children }) {
         dataToBeAdded.colors.splice(index, 1)
 
         checkEmptyValues()
-
         
         setLabels(dataToBeAdded.labels)
         setValues(dataToBeAdded.values)
@@ -119,6 +120,7 @@ export function AppProvider({ children }) {
         AddItem,
         validInfos,
         wealthUsed,
+        wealthRemaining,
         
         setName,
         name,

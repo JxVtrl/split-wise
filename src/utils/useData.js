@@ -4,6 +4,7 @@ export const useData = {
             "add": 'Adicionar novo item',
             "edit": 'Editar item',
             "config": 'Configurações',
+            "welcome": 'Bem-vindo ao Split Wise',
         },
         "subtitle": {
             "payout": 'Este é seu planejamento de gastos:',

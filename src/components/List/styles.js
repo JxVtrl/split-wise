@@ -31,13 +31,15 @@ export const Item = styled.li`
     border: 1px solid #ccc;
     margin: 0;
     list-style: none;
-    display: flex;
+    display: grid;
+    text-align: left;
+    grid-template-columns: 1.4fr 1fr 1.4fr 0.5fr;
     align-items: center;
     width: 100%;
     height: 35px;
     text-transform: capitalize;
 
-    > span {
+    > span:first-child {
         margin-left: 10px;
     }
 `

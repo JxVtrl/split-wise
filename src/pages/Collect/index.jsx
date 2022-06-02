@@ -32,6 +32,10 @@ export function Collect() {
         <Container>
             <form onSubmit={handleSubmit}>
                 <div>
+                    <h2>Bem-vindo ao Split Wise</h2>
+                    <p>Para começar, digite seu nome e o valor<br/>total de sua renda</p>
+                </div>
+                <div>
                     <label>
                         <span>Nome</span>
                         <input
@@ -65,6 +69,11 @@ export function Collect() {
                     type="submit"
                 >Enviar</button>
             </form>
+            <footer>
+                <p>
+                    Seus dados nunca serão compartilhados.
+                </p>
+            </footer>
         </Container>
     );
 }

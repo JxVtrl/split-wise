@@ -8,17 +8,18 @@ export function HeaderIcons() {
         handleAddPage,
         AddItem,
         handleConfigPage,
-        configPage
+        configPage,
+        validInfos
     } = useApp()
     return (
         <>
             {AddItem || (
                 <div>
                     {configPage ? (
-                <i className="fa-solid fa-x"
-                    onClick={handleConfigPage}
-                />
-                    ) : (
+                        <i className="fa-solid fa-x"
+                            onClick={handleConfigPage}
+                        />
+                    ) : validInfos && (
                     <>   
                         <i
                             className="fa-solid fa-plus"
