@@ -21,7 +21,8 @@ export const List = styled.ul`
 `
 
 export const Item = styled.li`
-    border: 1px solid #ccc;
+    border: 1px 0 solid #ccc;
+    
     list-style: none;
     display: grid;
     text-align: left;
