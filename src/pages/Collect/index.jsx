@@ -47,16 +47,15 @@ export function Collect() {
                         />
                     </label>
                     <label>
-                        <div>
-                            <span>Salário</span>
-                            <input
-                                type="text"
-                                name="salario"
-                                placeholder='Insira o salário'
-                                value={wealth.toFixed(2)}
-                                onChange={(e) => setWealth(Number(e.target.value))}
-                            />
-                        </div>
+                        <span>Salário</span>
+                        <input
+                            type="text"
+                            name="salario"
+                            placeholder='Insira o salário'
+                            value={wealth.toFixed(2)}
+                            onChange={(e) => setWealth(Number(e.target.value))}
+                        />
+                        
                         <div onClick={e => handleAddValue(e)}>
                             <button>+ 100,00</button>
                             <button>+ 500,00</button>

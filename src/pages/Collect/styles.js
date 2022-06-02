@@ -50,22 +50,17 @@ export const Container = styled.div`
                 text-align: left;
                 gap: 4px;
 
-                > div {
-                    display: flex;
-                    flex-direction: column;
-                    
-                    text-align: left;
-                    gap: 4px;
-
-                    input {
-                        border-radius: 10px;
-                        border: 1px solid #ccc;
-                        padding: 5px 10px;
-                        height: 20px;
-                    }
+                input {
+                    border-radius: 10px;
+                    border: 1px solid #ccc;
+                    padding: 5px 10px;
+                    height: 20px;
                 }
+                
 
-                > div:last-child {
+                div {
+                    display: flex;
+                    gap: 12px;
                     flex-direction: row;
                     margin: 10px auto 0;
 
