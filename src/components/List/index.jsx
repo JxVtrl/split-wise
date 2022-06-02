@@ -1,14 +1,13 @@
 import React from 'react';
 import { useApp } from '../../context';
 import { HeaderList } from '../Header/HeaderList';
-import { Container, Header, List as ItemList, Item, Info } from './styles';
+import { Container, List as ItemList, Item, Info } from './styles';
 
 export function List() {
     const {
         labels,
         values,
         wealth,
-        wealthUsed,
         handleDeleteItem,
     } = useApp();
 
